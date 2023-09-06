@@ -7,6 +7,7 @@ import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { ChatComponent } from './main/chat/chat.component';
 import {buttonChat} from "./main/button/buttonChat.component";
 import {InputFieldForChat} from "./main/inputField/inputFieldForChat";
+import { HttpClientModule } from '@angular/common/http';
 
 @NgModule({
   declarations: [
@@ -15,6 +16,7 @@ import {InputFieldForChat} from "./main/inputField/inputFieldForChat";
   ],
   imports: [
     BrowserModule,
+    HttpClientModule,
     AppRoutingModule,
     BrowserAnimationsModule,
     buttonChat,

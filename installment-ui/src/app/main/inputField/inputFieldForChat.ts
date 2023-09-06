@@ -13,4 +13,6 @@ import {FormsModule} from '@angular/forms';
   standalone: true,
   imports: [FormsModule, MatFormFieldModule, MatInputModule],
 })
-export class InputFieldForChat {}
+export class InputFieldForChat {
+  chatInputValue: any;
+}
