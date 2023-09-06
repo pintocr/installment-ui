@@ -6,6 +6,7 @@ import { AppComponent } from './app.component';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { ChatComponent } from './main/chat/chat.component';
 import {buttonChat} from "./main/button/buttonChat.component";
+import {InputFieldForChat} from "./main/inputField/inputFieldForChat";
 
 @NgModule({
   declarations: [
@@ -16,7 +17,8 @@ import {buttonChat} from "./main/button/buttonChat.component";
     BrowserModule,
     AppRoutingModule,
     BrowserAnimationsModule,
-    buttonChat
+    buttonChat,
+    InputFieldForChat
   ],
   providers: [],
   bootstrap: [AppComponent]
