@@ -5,8 +5,10 @@ import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { ChatComponent } from './main/chat/chat.component';
-import {buttonChat} from "./main/button/buttonChat.component";
-import {InputFieldForChat} from "./main/inputField/inputFieldForChat";
+import {FormsModule, ReactiveFormsModule} from "@angular/forms";
+import {MatFormFieldModule} from "@angular/material/form-field";
+import {MatInputModule} from "@angular/material/input";
+import {MatButtonModule} from "@angular/material/button";
 
 @NgModule({
   declarations: [
@@ -17,8 +19,11 @@ import {InputFieldForChat} from "./main/inputField/inputFieldForChat";
     BrowserModule,
     AppRoutingModule,
     BrowserAnimationsModule,
-    buttonChat,
-    InputFieldForChat
+    FormsModule,
+    MatFormFieldModule,
+    MatInputModule,
+    ReactiveFormsModule,
+    MatButtonModule
   ],
   providers: [],
   bootstrap: [AppComponent]
