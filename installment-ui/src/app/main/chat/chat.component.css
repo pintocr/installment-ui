@@ -7,6 +7,8 @@
   margin: 10px 0;
   margin-right: 550px;
   margin-left: 20px;
+  height: 90%;
+  width: 400px;
 }
 
 /* Darker chat container */
@@ -15,6 +17,8 @@
   background-color: #8b87a6;
   margin-left: 320px;
   margin-right: 250px;
+  height: 90%;
+  width: 400px;
 }
 
 /* Clear floats */
@@ -54,4 +58,5 @@
 
 .example-form {
   margin-left: 20px;
+  width: 1000px;
 }
