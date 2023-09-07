@@ -1,4 +1,10 @@
 <div>
+  <form [formGroup]="formName">
+  <div class="container darker">
+    <p formControlName="name">{{formName.value}}</p>
+  </div>
+  </form>
+
 
   <div class="container">
     <p>Hello. How are you today?</p>
