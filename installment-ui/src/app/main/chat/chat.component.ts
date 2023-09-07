@@ -15,8 +15,8 @@ import {TemplateConversation} from "../entities/template-conversation";
 export class ChatComponent {
   formName: FormGroup;
 
-  private defaultResponseText = "The AI is still computing an anwser! :)";
-  private startResponseText  = "The AI is computing an anwser! :)";
+  private defaultResponseText = "The AI is still computing an answer! :)";
+  private startResponseText  = "The AI is computing an answer! :)";
 
   private uuid: String = "";
 
@@ -50,6 +50,7 @@ export class ChatComponent {
           }),
           concatMap(() => {
             this.addTemplateConversation(1, this.startResponseText)
+            this.formName.reset();
             return interval(15000).pipe(
               concatMap(() => {
                 return this.httpService.getAnswer(this.uuid);
