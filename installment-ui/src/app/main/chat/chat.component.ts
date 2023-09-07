@@ -39,7 +39,6 @@ export class ChatComponent {
         .pipe(
           concatMap((uuid: Conversation) => {
             this.uuid = uuid.id;
-            this.addTemplateConversation(1, this.startResponseText)
             return of(uuid);
           }),
           concatMap(() => {
@@ -50,6 +49,7 @@ export class ChatComponent {
             return this.httpService.sendQuestion(newRequest);
           }),
           concatMap(() => {
+            this.addTemplateConversation(1, this.startResponseText)
             return interval(15000).pipe(
               concatMap(() => {
                 return this.httpService.getAnswer(this.uuid);
