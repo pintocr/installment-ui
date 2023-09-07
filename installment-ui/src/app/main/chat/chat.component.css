@@ -5,16 +5,16 @@
   border-radius: 5px;
   padding: 10px;
   margin: 10px 0;
-  margin-left: 320px;
-  margin-right: 250px;
+  margin-right: 550px;
+  margin-left: 20px;
 }
 
 /* Darker chat container */
 .darker {
   border-color: #54506d;
   background-color: #8b87a6;
-  margin-right: 550px;
-  margin-left: 20px;
+  margin-left: 320px;
+  margin-right: 250px;
 }
 
 /* Clear floats */
