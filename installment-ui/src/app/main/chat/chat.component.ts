@@ -46,7 +46,7 @@ export class ChatComponent {
             return this.httpService.sendQuestion(newRequest);
           }),
           concatMap(() => {
-            return interval(2000).pipe(
+            return interval(15000).pipe(
               concatMap(() => {
                 return this.httpService.getAnswer(this.uuid);
               }),
