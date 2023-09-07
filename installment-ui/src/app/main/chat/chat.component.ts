@@ -1,72 +1,81 @@
 import { Component, OnInit } from '@angular/core';
-import {FormControl, FormGroup, FormBuilder} from '@angular/forms';
-import { Component } from '@angular/core';
+import {FormControl, FormGroup, FormBuilder, Validators} from '@angular/forms';
 import {concatMap, interval, of, Subject, takeUntil} from "rxjs";
 import {UserResponse} from "../entities/user-response";
 import {UserRequest} from "../entities/user-request";
 import {RestclienthttpService} from "../service/restclienthttp.service";
 import {Conversation} from "../entities/conversation";
+import {TemplateConversation} from "../entities/template-conversation";
 
 @Component({
   selector: 'app-chat',
   templateUrl: './chat.component.html',
   styleUrls: ['./chat.component.css']
 })
-export class ChatComponent implements OnInit{
+export class ChatComponent {
   formName: FormGroup;
 
-  constructor(private fb: FormBuilder) {
-    this.formName = this.fb.group({
-      name: ['test']
+  private uuid: String = "";
+
+  stopPollingSubject = new Subject<void>();
+
+  conversations: TemplateConversation[] = [];
+
+  constructor(private fb: FormBuilder, private httpService: RestclienthttpService) {
+    this.formName = fb.group({
+      name: new FormControl<String>('', Validators.required)
     });
   }
 
-  ngOnInit() {
-    this.formName.controls['name'].setValue("Some Example");
-  /* this.formName = this.fb.group({
-     name: new FormControl('')
-   });*/
- }
-  private uuid: String = "";
+  public onBtnClickedEvent() {
+    if ( this.formName.valid ) {
+      const question = this.formName.value.name;
+      this.addTemplateConversation(0, question);
 
-  private stopPollingSubject = new Subject<void>();
-
-  constructor(private httpService: RestclienthttpService) {
+      this.httpService.getUUID()
+        .pipe(
+          concatMap((uuid: Conversation) => {
+            this.uuid = uuid.id;
+            return of(uuid);
+          }),
+          concatMap(() => {
+            const newRequest: UserRequest =  {
+              conversationId: this.uuid,
+              command: question
+            }
+            return this.httpService.sendQuestion(newRequest);
+          }),
+          concatMap(() => {
+            return interval(2000).pipe(
+              concatMap(() => {
+                return this.httpService.getAnswer(this.uuid);
+              }),
+              takeUntil(this.stopPollingSubject)
+            )
+          }),
+          concatMap((resp: UserResponse) => {
+            if ( resp.ready ) {
+              this.stopPollingSubject.next();
+            }
+            return of(resp);
+          })
+        )
+        .subscribe((response) => {
+          if ( response.ready ) {
+            this.addTemplateConversation(1, response.response);
+          } else {
+            this.addTemplateConversation(1, "The AI is still computing an anwser! :)")
+          }
+        });
+    }
   }
 
-  public onBtnClickedEvent() {
-
-    const question = "asdf";
-
-    this.httpService.getUUID()
-      .pipe(
-        concatMap((uuid: Conversation) => {
-          this.uuid = uuid.id;
-          return of(uuid);
-        }),
-        concatMap(() => {
-          const newRequest: UserRequest =  {
-            conversationId: this.uuid,
-            command: question
-          }
-          return this.httpService.sendQuestion(newRequest);
-        }),
-        concatMap(() => {
-          return interval(2000).pipe(
-            concatMap(() => {
-              return this.httpService.getAnswer(this.uuid);
-            }),
-            takeUntil(this.stopPollingSubject)
-          )
-        }),
-        concatMap((resp: UserResponse) => {
-          if ( resp.ready ) {
-            this.stopPollingSubject.next();
-          }
-          return of(resp);
-        })
-      )
-      .subscribe((response) => console.log(response));
+  private addTemplateConversation(type: number, text: String) {
+    const newTemplateConversation: TemplateConversation = {
+      type: type,
+      text: text
+    }
+    this.conversations.push(newTemplateConversation)
   }
 
 }

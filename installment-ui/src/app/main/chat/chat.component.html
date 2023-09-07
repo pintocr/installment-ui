@@ -1,37 +1,27 @@
 <div>
-  <form [formGroup]="formName">
-  <div class="container darker">
-    <p formControlName="name">{{formName.value}}</p>
-  </div>
-  </form>
-
-
   <div class="container">
     <p>Hello. How are you today?</p>
-    <span class="time-right">11:00</span>
   </div>
 
-  <div class="container darker">
-    <p>Hey! I'm fine. Thanks for asking!</p>
-    <span class="time-left">11:01</span>
-  </div>
+  <div *ngFor="let conversation of conversations">
+    <div *ngIf="conversation.type === 0; else notDark" class="container darker">
+      <p>{{conversation.text}}</p>
+    </div>
 
-  <div class="container">
-    <p>Sweet! So, what do you wanna do today?</p>
-    <span class="time-right">11:02</span>
-  </div>
-
-  <div class="container darker">
-    <p>Nah, I dunno. Helping you to create a new Installment?</p>
-    <span class="time-left">11:05</span>
+    <ng-template #notDark>
+      <div class="container">
+        <p>{{conversation.text}}</p>
+      </div>
+    </ng-template>
   </div>
 </div>
 
 <div>
-  <form class="example-form" style="display: flex;">
+
+  <form [formGroup]="formName" class="example-form" style="display: flex;">
     <mat-form-field class="example-full-width" style="width: 80%; margin-right: 5%;">
       <mat-label>Write with our Chat Assistant</mat-label>
-      <textarea matInput placeholder="Please, add a new Installment..."></textarea>
+      <textarea formControlName="name" matInput placeholder="Please, add a new Installment..."></textarea>
     </mat-form-field>
     <button mat-raised-button color="primary" style="margin-top: 3%;" (click)="onBtnClickedEvent()">Start Chat</button>
   </form>
