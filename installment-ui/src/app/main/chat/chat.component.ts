@@ -15,6 +15,9 @@ import {TemplateConversation} from "../entities/template-conversation";
 export class ChatComponent {
   formName: FormGroup;
 
+  private defaultResponseText = "The AI is still computing an anwser! :)";
+  private startResponseText  = "The AI is computing an anwser! :)";
+
   private uuid: String = "";
 
   stopPollingSubject = new Subject<void>();
@@ -36,6 +39,7 @@ export class ChatComponent {
         .pipe(
           concatMap((uuid: Conversation) => {
             this.uuid = uuid.id;
+            this.addTemplateConversation(1, this.startResponseText)
             return of(uuid);
           }),
           concatMap(() => {
@@ -64,7 +68,8 @@ export class ChatComponent {
           if ( response.ready ) {
             this.addTemplateConversation(1, response.response);
           } else {
-            this.addTemplateConversation(1, "The AI is still computing an anwser! :)")
+
+            this.addTemplateConversation(1, this.defaultResponseText)
           }
         });
     }
