@@ -23,7 +23,7 @@
   <form [formGroup]="formName" class="example-form" style="display: flex;">
     <mat-form-field class="example-full-width" style="width: 80%; margin-right: 5%;">
       <mat-label>Write with our Chat Assistant</mat-label>
-      <textarea formControlName="name" matInput placeholder="Please, add a new Installment..."></textarea>
+      <textarea formControlName="name" matInput placeholder="Please, add a new Installment..." (keydown.enter)="onBtnClickedEvent()"></textarea>
     </mat-form-field>
     <button mat-raised-button color="primary" style="margin-top: 3%;" (click)="onBtnClickedEvent()">Start Chat</button>
   </form>
