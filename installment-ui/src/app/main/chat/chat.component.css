@@ -5,12 +5,16 @@
   border-radius: 5px;
   padding: 10px;
   margin: 10px 0;
+  margin-left: 320px;
+  margin-right: 250px;
 }
 
 /* Darker chat container */
 .darker {
-  border-color: #ccc;
-  background-color: #ddd;
+  border-color: #454545;
+  background-color: #b4b4b4;
+  margin-right: 550px;
+  margin-left: 20px;
 }
 
 /* Clear floats */
@@ -46,4 +50,8 @@
 .time-left {
   float: left;
   color: #999;
+}
+
+.example-form {
+  margin-left: 20px;
 }
